@@ -6,51 +6,90 @@ namespace RestaurantApp.Tests
 {
     public class MyTests
     {
-        // 1. Позитивний тест, техніка EP (Еквівалентне розділення)
-        // Перевіряємо, що звичайна назва страви додається без проблем
+        // --- ГРУПА 1: Додавання страв (AddDish) ---
+
         [Fact]
-        public void AddDish_ValidName_ShouldAddSuccessfully()
+        public void Test1_AddDish_Positive_EP() // Позитивний сценарій
         {
-            // Arrange (Налаштування - Патерн AAA)
-            var restaurant = new Restaurant(1, "Mon Plaisir", "Харків");
-            string dishName = "Паста Карбонара";
-
-            // Act (Дія - Патерн AAA)
-            restaurant.AddDish(dishName);
-            var result = restaurant.GetTopDishes(1);
-
-            // Assert (Перевірка - Патерн AAA)
-            Assert.Contains(dishName, result);
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            res.AddDish("Борщ");
+            Assert.Contains("Борщ", res.GetTopDishes(10));
         }
 
-        // 2. Тест на граничні значення, техніка BVA (Аналіз граничних значень)
-        // Перевіряємо максимально допустимий рейтинг (5.0)
         [Fact]
-        public void UpdateRating_BoundaryValueFive_ShouldSetCorrectly()
+        public void Test2_AddDish_EmptyName_Negative_EP() // Негативний: порожній рядок
         {
-            // Arrange
-            var restaurant = new Restaurant(1, "Mon Plaisir", "Харків");
-            float maxRating = 5.0f;
-
-            // Act
-            restaurant.UpdateRating(maxRating);
-
-            // Assert
-            Assert.Equal(maxRating, restaurant.Rating);
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            Assert.Throws<ArgumentException>(() => res.AddDish(""));
         }
 
-        // 3. Негативний тест, техніка EP (Еквівалентне розділення)
-        // Перевіряємо реакцію системи на некоректні дані (порожній рядок)
         [Fact]
-        public void AddDish_EmptyName_ShouldThrowException()
+        public void Test3_AddDish_Null_Negative_EP() // Негативний: null
         {
-            // Arrange
-            var restaurant = new Restaurant(1, "Mon Plaisir", "Харків");
-            string emptyDish = "";
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            Assert.Throws<ArgumentException>(() => res.AddDish(null!));
+        }
 
-            // Act & Assert
-            // Перевіряємо, що метод викидає виключення (ArgumentException)
-            Assert.Throws<ArgumentException>(() => restaurant.AddDish(emptyDish));
+        // --- ГРУПА 2: Рейтинг (UpdateRating) ---
+
+        [Fact]
+        public void Test4_UpdateRating_Boundary_Max_BVA() // Межа: 5.0
+        {
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            res.UpdateRating(5.0f);
+            Assert.Equal(5.0f, res.Rating);
+        }
+
+        [Fact]
+        public void Test5_UpdateRating_Boundary_Min_BVA() // Межа: 0.0
+        {
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            res.UpdateRating(0.0f);
+            Assert.Equal(0.0f, res.Rating);
+        }
+
+        [Fact]
+        public void Test6_UpdateRating_BelowMin_Negative_EP() // Негативний: менше 0
+        {
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            Assert.Throws<ArgumentOutOfRangeException>(() => res.UpdateRating(-1.0f));
+        }
+
+        [Fact]
+        public void Test7_UpdateRating_AboveMax_Negative_EP() // Негативний: більше 5
+        {
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            Assert.Throws<ArgumentOutOfRangeException>(() => res.UpdateRating(5.1f));
+        }
+
+        // --- ГРУПА 3: Отримання списку (GetTopDishes) ---
+
+        [Fact]
+        public void Test8_GetTopDishes_Positive_EP() // Позитивний: повертає правильну кількість
+        {
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            res.AddDish("Dish 1");
+            res.AddDish("Dish 2");
+            var result = res.GetTopDishes(2);
+            Assert.Equal(2, result.Count);
+        }
+
+        [Fact]
+        public void Test9_GetTopDishes_RequestMoreThanExist_BVA() // Граничне: просимо більше, ніж є
+        {
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            res.AddDish("Dish 1");
+            var result = res.GetTopDishes(10); // Просимо 10, а є 1
+            Assert.Single(result);
+        }
+
+        [Fact]
+        public void Test10_GetTopDishes_ZeroCount_BVA() // Граничне: просимо 0 страв
+        {
+            var res = new Restaurant(1, "Mon Plaisir", "Kharkiv");
+            res.AddDish("Dish 1");
+            var result = res.GetTopDishes(0);
+            Assert.Empty(result);
         }
     }
 }
