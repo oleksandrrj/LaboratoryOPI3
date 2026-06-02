@@ -6,7 +6,7 @@ namespace RestaurantApp.Tests
 {
     public class MyTests
     {
-        // --- ГРУПА 1: Додавання страв (AddDish) ---
+        // --- ГРУПА 1: Додавання страв (AddDish) ---    
 
         [Fact]
         public void Test1_AddDish_Positive_EP() // Позитивний сценарій
