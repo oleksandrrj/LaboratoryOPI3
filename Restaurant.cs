@@ -5,7 +5,7 @@ using System.Linq;
 namespace RestaurantApp
 {
     /// <summary>
-    /// Клас, що представляє ресторан та керує його даними.
+    /// Клас, що представляє ресторан та керує його даними.   
     /// </summary>
     public class Restaurant
     {
@@ -66,7 +66,7 @@ namespace RestaurantApp
         /// Повертає список перших N страв.
         /// </summary>
         /// <param name="count">Кількість страв для отримання</param>
-        /// <returns>Список назв страв</returns>
+        /// <returns>Список назв страв</returns>   
         public List<string> GetTopDishes(int count)
         {
             // Якщо передано від'ємне число, прирівнюємо до 0
