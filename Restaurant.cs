@@ -5,7 +5,7 @@ using System.Linq;
 namespace RestaurantApp
 {
     /// <summary>
-    /// Клас, що представляє ресторан та керує його даними.
+    /// Клас, що представляє ресторан та керує його даними.   
     /// </summary>
     public class Restaurant
     {
