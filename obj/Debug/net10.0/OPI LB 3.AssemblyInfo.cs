@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OPI LB 3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e34e245f52e2a0c2e227c821bbef625bede0f17")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b5674f59cf1cf4949cbfabd1692f9328d8854c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("OPI LB 3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OPI LB 3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
